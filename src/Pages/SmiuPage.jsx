@@ -1,15 +1,15 @@
-import React from "react";
-import GetInput from "../comp/getNumber";
+import React from 'react'
+import Smiu from '../comp/Smiu';
 import { useParams } from 'react-router-dom';
 
-const InputPage = () => {
+const SmiuPage = () => {
     const { inputno } = useParams();  // Extract inputno from URL parameters
 
     return (
         <div>
-            <GetInput courseNo={inputno} />
+            <Smiu courseNo={inputno} />
         </div>
     );
-};
+}
 
-export default InputPage;
+export default SmiuPage

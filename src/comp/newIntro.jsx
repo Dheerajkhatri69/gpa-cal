@@ -2,7 +2,7 @@
 import React from "react";
 import { SparklesCore } from "../components/ui/sparkles";
 import { PlaceholdersAndVanishInputDemo } from "./input"
-export function SparklesPreview() {
+export function SparklesPreview({titel}) {
     return (
         (<div
             className="min-h-[550px] h-[700px] relative w-full bg-black  flex flex-col items-center justify-center overflow-hidden">
@@ -20,7 +20,7 @@ export function SparklesPreview() {
                 className="md:text-5xl mb-5 text-4xl lg:text-6xl font-bold text-center text-secondary relative z-20">
                 GPA CALCULATOR
             </h1>
-            <PlaceholdersAndVanishInputDemo/>
+            <PlaceholdersAndVanishInputDemo titel={titel}/>
         </div>)
     );
 }

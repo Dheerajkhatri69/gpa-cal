@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlaceholdersAndVanishInput } from "../components/ui/placeholders-and-vanish-input";
 import { useNavigate} from "react-router-dom";
 
-export function PlaceholdersAndVanishInputDemo() {
+export function PlaceholdersAndVanishInputDemo({titel}) {
   const placeholders = [
     "Enter the no Courses:","Enter the no Courses:"
   ];
@@ -19,7 +19,10 @@ export function PlaceholdersAndVanishInputDemo() {
     e.preventDefault();
     console.log(inputValue)
     setTimeout(() => {
-      navigate(`/gpa-cal/input/${inputValue}`); 
+
+      // navigate(`/gpa-cal/input/${inputValue}`); 
+      // navigate(`/gpa-cal/NG/${inputValue}`); 
+      navigate(`/gpa-cal/${titel==="NG" ? "NG" : "AG"}/${inputValue}`); 
       
     }, 1000);
   };

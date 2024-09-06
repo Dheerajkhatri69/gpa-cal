@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-// import { PlaceholdersAndVanishInputDemo } from "./comp/input"
 import { SparklesPreview } from "./comp/newIntro"
 import AOS from "aos"
 import "aos/dist/aos.css"
@@ -7,6 +6,9 @@ import MainNavbar from "./comp/Navbar"
 import InputPage from "./Pages/InputPage"
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ResultPage from "./Pages/ResultPage"
+import SmiuPage from "./Pages/SmiuPage"
+import NG from "./Pages/NG"
+import AG from "./Pages/AG"
 
 function App() {
 
@@ -33,16 +35,20 @@ function App() {
       <BrowserRouter>
 
         <ScrollToTop />
-        <MainNavbar />
         <Routes>
           <Route path='/gpa-cal/' element={
             <>
-              <SparklesPreview />
-              {/* <PlaceholdersAndVanishInputDemo /> */}
+              <MainNavbar titel="NG"/>
+              <SparklesPreview titel="NG"/>
             </>
           } />
-          <Route path="/gpa-cal/input/:inputno" element={<InputPage />} />
-          <Route path="/gpa-cal/result/:result" element={<ResultPage/>} />
+          <Route path="/gpa-cal/NG/:inputno" element={<><MainNavbar titel="NG"/><SmiuPage /></>} />
+          <Route path="/gpa-cal/NG" element={<><MainNavbar titel="NG"/><NG /></>} />
+
+          <Route path="/gpa-cal/AG/:inputno" element={<><MainNavbar titel="AG"/><InputPage /></> } />
+          <Route path="/gpa-cal/AG" element={<><MainNavbar titel="AG"/><AG /></>} />
+
+          <Route path="/gpa-cal/result/:result" element={ <><MainNavbar/><ResultPage /></>} />
         </Routes>
       </BrowserRouter>
 
