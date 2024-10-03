@@ -32,9 +32,12 @@ export default function GetInput({ courseNo }) {
         };
         setGradePoints(newGradePoints);
     };
+
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const calculateGPA = () => {
+
+    const calculateGPA = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
         setIsLoading(true);
         setTimeout(() => {
             let totalCreditHours = 0;
@@ -74,9 +77,6 @@ export default function GetInput({ courseNo }) {
             // Store course data array in localStorage
             localStorage.setItem("courseData", JSON.stringify(courseDataArray));
             localStorage.setItem("GPAData", JSON.stringify(gpa.toFixed(2)));
-            // console.log("array obj:", courseDataArray)
-
-            // alert(`Your GPA is: ${gpa.toFixed(2)}`);
 
             navigate(`/gpa-cal/result/${gpa.toFixed(2)}`);
 
@@ -84,7 +84,7 @@ export default function GetInput({ courseNo }) {
     };
 
     return (
-        <div className="w-full flex flex-col gap-4 container mb-20">
+        <form onSubmit={calculateGPA} className="w-full flex flex-col gap-4 container mb-20">
             <h1 data-aos="zoom-in" className="mt-4 text-center text-secondary font-bold text-2xl sm:text-5xl">Enter Your Grade Point</h1>
             <div className="container mb-4 w-full flex justify-center"><AnimatedModalDemo /></div>
             <Dropdown backdrop="blur">
@@ -96,13 +96,13 @@ export default function GetInput({ courseNo }) {
                     </Button>
                 </DropdownTrigger>
                 <DropdownMenu variant="faded" aria-label="Static Actions">
-                <DropdownItem key="Grade Point" className="grid grid-cols-2 bg-secondary" onClick={()=>{navigate(`/gpa-cal/AG/${courseNo}`)}}>Grade Point </DropdownItem>
-                <DropdownItem key="Numerical Grade" onClick={()=>{navigate(`/gpa-cal/NG/${courseNo}`)}} >Numerical Grade</DropdownItem>
+                    <DropdownItem key="Grade Point" className="grid grid-cols-2 bg-secondary" onClick={() => { navigate(`/gpa-cal/AG/${courseNo}`) }}>Grade Point</DropdownItem>
+                    <DropdownItem key="Numerical Grade" onClick={() => { navigate(`/gpa-cal/NG/${courseNo}`) }}>Numerical Grade</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             {[...Array(Number(courseNo))].map((_, i) => (
                 <div key={i} className="w-full grid grid-cols-2 gap-4">
-                    <Select label="Select Credit Hours" className="w-full" onChange={(e) => handleCreditChange(i, e.target.value)}>
+                    <Select label="Select Credit Hours" className="w-full" onChange={(e) => handleCreditChange(i, e.target.value)} required>
                         {Cradit.map((option) => (
                             <SelectItem key={option.key} value={option.key}>
                                 {option.label}
@@ -115,12 +115,14 @@ export default function GetInput({ courseNo }) {
                             label="0-4 (Grade Point)"
                             onChange={(e) => handleGradeChange(i, 'main', e)}
                             className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            required
                         />
                         <Input
                             className={`${labVisibility[i] ? "" : "hidden"} mt-2 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
                             type="number"
                             label="0-4 (Lab)"
                             onChange={(e) => handleGradeChange(i, 'lab', e)}
+                            required={labVisibility[i]} // Make lab input required if visible
                         />
                     </span>
                 </div>
@@ -129,7 +131,7 @@ export default function GetInput({ courseNo }) {
                 <Button
                     radius="full"
                     className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-                    onClick={calculateGPA}
+                    type="submit" // Change to submit to trigger form submit event
                     isLoading={isLoading}
                 >
                     Show result
@@ -140,6 +142,6 @@ export default function GetInput({ courseNo }) {
                     <h2>Your GPA is: {gpa}</h2>
                 </div>
             )}
-        </div>
+        </form>
     );
 }
